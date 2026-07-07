@@ -1,0 +1,1088 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shubh Sankalp — Book Your Pooja, Set Your Sankalp</title>
+<meta name="description" content="Book a Purohit for Griha Pravesh, Satyanarayan Katha, Ganesh Pooja and more. Pick your seva, choose an auspicious slot, confirm on WhatsApp — pay only after the ritual, in person.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Yatra+One&family=Hind:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================
+   TOKENS — edit these to re-theme the whole site
+   ============================================ */
+:root{
+  --kumkum:#7A1428;        /* deep sindoor maroon — primary dark */
+  --kumkum-dark:#4A0D18;
+  --kumkum-tint:#9C2540;
+  --marigold:#F0862A;      /* primary accent / CTAs */
+  --marigold-light:#FFA94D;
+  --turmeric:#F4B93E;      /* secondary accent */
+  --brass:#C9A24B;         /* borders, dividers */
+  --ivory:#FDF0E1;         /* section background (warm) */
+  --ivory-soft:#FFF8EE;
+  --dusk:#2B1512;          /* body text */
+  --dusk-soft:#6B4A3F;     /* muted text */
+  --white:#FFFFFF;
+  --whatsapp:#25D366;
+  --whatsapp-dark:#1EA952;
+  --error:#B3261E;
+  --shadow-soft:0 12px 32px rgba(74,13,24,.12);
+  --shadow-lift:0 20px 40px rgba(74,13,24,.18);
+  --radius-card:20px;
+  --radius-chip:999px;
+  --font-display:'Yatra One', serif;
+  --font-body:'Hind', sans-serif;
+  --container:1180px;
+}
+
+/* ============================================
+   RESET + BASE
+   ============================================ */
+*{ margin:0; padding:0; box-sizing:border-box; }
+html{ scroll-behavior:smooth; }
+body{
+  font-family:var(--font-body);
+  color:var(--dusk);
+  background:var(--ivory-soft);
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+img{ max-width:100%; display:block; }
+a{ color:inherit; text-decoration:none; }
+button{ font-family:inherit; cursor:pointer; border:none; background:none; color:inherit; }
+ul{ list-style:none; }
+h1,h2,h3{ font-family:var(--font-display); line-height:1.15; font-weight:400; }
+input,textarea,select{ font-family:inherit; }
+@media (prefers-reduced-motion: reduce){
+  html{ scroll-behavior:auto; }
+  *, *::before, *::after{
+    animation-duration:.01ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:.01ms !important;
+    scroll-behavior:auto !important;
+  }
+}
+
+.container{ max-width:var(--container); margin:0 auto; padding:0 24px; }
+.skip-link{ position:absolute; left:-999px; top:0; background:var(--marigold); color:var(--dusk); padding:10px 18px; z-index:1000; border-radius:0 0 10px 0; font-weight:600; }
+.skip-link:focus{ left:0; }
+:focus-visible{ outline:3px solid var(--marigold); outline-offset:3px; }
+
+.eyebrow{
+  font-family:var(--font-body); font-weight:600; letter-spacing:.14em; text-transform:uppercase;
+  font-size:.78rem; color:var(--marigold); display:flex; align-items:center; gap:10px; margin-bottom:14px;
+}
+.eyebrow::before{ content:''; width:26px; height:2px; background:var(--brass); display:inline-block; flex-shrink:0; }
+
+.section{ padding:96px 0; position:relative; }
+.section--ivory{ background:var(--ivory); }
+.section--soft{ background:var(--ivory-soft); }
+.section-head{ max-width:640px; margin-bottom:56px; }
+.section-head h2{ font-size:clamp(1.9rem,4vw,2.6rem); margin-bottom:16px; color:var(--kumkum); }
+.section-head p{ color:var(--dusk-soft); font-size:1.05rem; }
+.section-head.center{ margin-left:auto; margin-right:auto; text-align:center; }
+
+.btn{
+  display:inline-flex; align-items:center; justify-content:center; gap:10px;
+  padding:15px 30px; border-radius:var(--radius-chip); font-weight:600; font-size:1rem;
+  transition:transform .18s ease, box-shadow .18s ease, background .18s ease; white-space:nowrap;
+}
+.btn svg{ width:20px; height:20px; flex-shrink:0; }
+.btn:hover{ transform:translateY(-2px); }
+.btn--primary{ background:var(--marigold); color:var(--dusk); box-shadow:var(--shadow-soft); }
+.btn--primary:hover{ background:var(--marigold-light); box-shadow:var(--shadow-lift); }
+.btn--outline{ border:2px solid var(--brass); color:var(--ivory-soft); }
+.btn--outline:hover{ background:rgba(255,255,255,.08); }
+.btn--dark-outline{ border:2px solid var(--kumkum); color:var(--kumkum); }
+.btn--dark-outline:hover{ background:rgba(122,20,40,.06); }
+.btn--whatsapp{ background:var(--whatsapp); color:#fff; }
+.btn--whatsapp:hover{ background:var(--whatsapp-dark); }
+.btn--block{ width:100%; }
+.btn:disabled{ opacity:.55; cursor:not-allowed; transform:none; }
+
+.reveal{ opacity:0; transform:translateY(24px); transition:opacity .6s ease, transform .6s ease; }
+.reveal.in-view{ opacity:1; transform:none; }
+
+/* ============================================
+   HEADER
+   ============================================ */
+.site-header{ position:fixed; top:0; left:0; right:0; z-index:500; padding:22px 0; transition:padding .25s ease, background .25s ease, box-shadow .25s ease; }
+.site-header .container{ display:flex; align-items:center; justify-content:space-between; }
+.logo{ font-family:var(--font-display); font-size:1.5rem; color:#fff; display:flex; align-items:center; gap:8px; }
+.logo .mark{ color:var(--turmeric); }
+.nav-links{ display:flex; align-items:center; gap:34px; }
+.nav-links a:not(.btn){ color:rgba(255,255,255,.88); font-weight:500; font-size:.98rem; position:relative; }
+.nav-links a:not(.btn)::after{ content:''; position:absolute; left:0; bottom:-6px; width:0; height:2px; background:var(--turmeric); transition:width .2s ease; }
+.nav-links a:not(.btn):hover::after{ width:100%; }
+.nav-toggle{ display:none; flex-direction:column; gap:5px; width:30px; z-index:600; }
+.nav-toggle span{ display:block; height:2px; background:#fff; border-radius:2px; transition:transform .25s ease, opacity .25s ease; }
+.nav-toggle.active span:nth-child(1){ transform:translateY(7px) rotate(45deg); }
+.nav-toggle.active span:nth-child(2){ opacity:0; }
+.nav-toggle.active span:nth-child(3){ transform:translateY(-7px) rotate(-45deg); }
+.site-header.scrolled{ background:var(--kumkum); box-shadow:0 6px 24px rgba(0,0,0,.18); padding:14px 0; }
+
+@media (max-width:900px){
+  .nav-toggle{ display:flex; }
+  .nav-links{
+    position:fixed; inset:0; background:var(--kumkum-dark);
+    flex-direction:column; justify-content:center; gap:30px;
+    transform:translateX(100%); transition:transform .3s ease;
+  }
+  .nav-links.open{ transform:translateX(0); }
+  .nav-links a:not(.btn){ font-size:1.3rem; }
+}
+
+/* ============================================
+   HERO
+   ============================================ */
+.hero{
+  position:relative; min-height:100vh; display:flex; align-items:center;
+  background:radial-gradient(circle at 78% 15%, var(--kumkum-tint), var(--kumkum) 55%, var(--kumkum-dark) 100%);
+  overflow:hidden; padding:130px 0 80px; color:var(--ivory-soft);
+}
+.hero__rings{ position:absolute; top:-140px; right:-160px; width:640px; height:640px; border-radius:50%; border:1.5px dashed rgba(201,162,75,.32); animation:spin 100s linear infinite; }
+.hero__rings::before{ content:''; position:absolute; inset:60px; border-radius:50%; border:1.5px dashed rgba(201,162,75,.25); }
+.hero__rings::after{ content:''; position:absolute; inset:140px; border-radius:50%; border:1.5px solid rgba(244,185,62,.28); }
+@keyframes spin{ to{ transform:rotate(360deg); } }
+
+.petal{ position:absolute; width:16px; height:12px; background:linear-gradient(135deg,var(--turmeric),var(--marigold)); border-radius:0 50% 50% 50%; opacity:0; animation:fall linear infinite; pointer-events:none; }
+@keyframes fall{ 0%{ transform:translateY(-40px) rotate(0deg); opacity:0; } 10%{ opacity:.85; } 90%{ opacity:.6; } 100%{ transform:translateY(560px) rotate(220deg); opacity:0; } }
+.petal:nth-child(1){ left:4%; animation-duration:10s; animation-delay:.2s; }
+.petal:nth-child(2){ left:14%; animation-duration:8s; animation-delay:2.1s; width:10px; height:8px; }
+.petal:nth-child(3){ left:24%; animation-duration:12s; animation-delay:.8s; }
+.petal:nth-child(4){ left:37%; animation-duration:9s; animation-delay:3.4s; width:12px; height:9px; }
+.petal:nth-child(5){ left:52%; animation-duration:11s; animation-delay:1.6s; }
+.petal:nth-child(6){ left:64%; animation-duration:8.5s; animation-delay:4.2s; width:10px; height:8px; }
+.petal:nth-child(7){ left:76%; animation-duration:10.5s; animation-delay:.4s; }
+.petal:nth-child(8){ left:85%; animation-duration:9.5s; animation-delay:2.8s; width:12px; height:9px; }
+.petal:nth-child(9){ left:93%; animation-duration:12.5s; animation-delay:1.2s; }
+.petal:nth-child(10){ left:45%; animation-duration:13s; animation-delay:5s; width:9px; height:7px; }
+
+.hero__inner{ position:relative; z-index:2; max-width:740px; margin:0 auto; text-align:center; }
+.hero .eyebrow{ color:var(--turmeric); justify-content:center; }
+.hero h1{ font-size:clamp(2.3rem,5.2vw,3.7rem); margin-bottom:22px; }
+.hero h1 em{ font-style:normal; color:var(--turmeric); }
+.hero p.lede{ font-size:1.12rem; color:rgba(253,240,225,.86); max-width:560px; margin:0 auto 32px; }
+.hero__actions{ display:flex; gap:16px; flex-wrap:wrap; justify-content:center; margin-bottom:34px; }
+.hero__muhurat{ display:inline-flex; align-items:center; gap:12px; background:rgba(255,255,255,.08); border:1px solid rgba(201,162,75,.4); padding:12px 22px; border-radius:999px; font-size:.9rem; }
+.hero__muhurat .dot{ width:8px; height:8px; border-radius:50%; background:var(--turmeric); box-shadow:0 0 0 4px rgba(244,185,62,.25); animation:pulseDot 2s ease-in-out infinite; flex-shrink:0; }
+@keyframes pulseDot{ 0%,100%{ opacity:1; } 50%{ opacity:.4; } }
+
+@media (max-width:700px){
+  .hero{ padding:110px 0 60px; min-height:auto; }
+  .hero__actions{ flex-direction:column; align-items:stretch; }
+}
+
+/* ============================================
+   STATS STRIP
+   ============================================ */
+.stats{ background:var(--kumkum-dark); padding:40px 0; }
+.stats .container{ display:grid; grid-template-columns:repeat(4,1fr); gap:24px; text-align:center; }
+.stats .stat b{ display:block; font-family:var(--font-display); font-size:clamp(1.6rem,3vw,2.2rem); color:var(--turmeric); margin-bottom:6px; }
+.stats .stat span{ font-size:.82rem; color:rgba(253,240,225,.75); letter-spacing:.03em; }
+@media (max-width:700px){ .stats .container{ grid-template-columns:repeat(2,1fr); row-gap:28px; } }
+
+/* ============================================
+   SEVA / SERVICES
+   ============================================ */
+.seva-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:24px; grid-auto-flow:dense; }
+.service-card{
+  background:#fff; border-radius:var(--radius-card); padding:30px 26px; border:1px solid rgba(201,162,75,.25);
+  position:relative; transition:transform .22s ease, box-shadow .22s ease; display:flex; flex-direction:column;
+}
+.service-card:hover{ transform:translateY(-6px); box-shadow:var(--shadow-lift); }
+.service-card__icon{ width:50px; height:50px; border-radius:14px; background:linear-gradient(135deg,var(--marigold),var(--turmeric)); display:flex; align-items:center; justify-content:center; margin-bottom:18px; flex-shrink:0; }
+.service-card__icon svg{ width:24px; height:24px; stroke:#fff; }
+.service-card h3{ font-size:1.25rem; color:var(--kumkum); margin-bottom:10px; }
+.service-card p{ color:var(--dusk-soft); font-size:.93rem; margin-bottom:16px; flex-grow:1; }
+.service-card__meta{ display:flex; justify-content:space-between; font-size:.82rem; color:var(--dusk-soft); border-top:1px dashed rgba(201,162,75,.4); padding-top:14px; margin-bottom:16px; }
+.service-card__meta b{ color:var(--kumkum); }
+.service-card__book{ align-self:flex-start; padding:10px 20px; font-size:.88rem; }
+.service-card--featured{ grid-column:span 2; grid-row:span 2; background:linear-gradient(160deg,var(--kumkum),var(--kumkum-dark)); color:#fff; }
+.service-card--featured h3{ font-size:1.5rem; color:var(--turmeric); }
+.service-card--featured p{ color:rgba(253,240,225,.85); font-size:1rem; }
+.service-card--featured .service-card__meta{ border-color:rgba(201,162,75,.3); color:rgba(253,240,225,.7); }
+.service-card--featured .service-card__meta b{ color:var(--turmeric); }
+
+@media (max-width:1000px){ .seva-grid{ grid-template-columns:repeat(2,1fr); } .service-card--featured{ grid-row:auto; } }
+@media (max-width:620px){ .seva-grid{ grid-template-columns:1fr; } .service-card--featured{ grid-column:span 1; } }
+
+/* ============================================
+   HOW IT WORKS
+   ============================================ */
+.how-steps{ display:grid; grid-template-columns:repeat(4,1fr); gap:32px; counter-reset:step; }
+.how-step{ position:relative; padding-top:14px; }
+.how-step::before{
+  counter-increment:step; content:counter(step,decimal-leading-zero);
+  font-family:var(--font-display); font-size:2.6rem; color:rgba(122,20,40,.14); display:block; line-height:1; margin-bottom:6px;
+}
+.how-step h3{ font-size:1.1rem; color:var(--kumkum); margin-bottom:8px; }
+.how-step p{ color:var(--dusk-soft); font-size:.92rem; }
+@media (max-width:900px){ .how-steps{ grid-template-columns:1fr 1fr; gap:36px; } }
+@media (max-width:600px){ .how-steps{ grid-template-columns:1fr; } }
+
+/* ============================================
+   SANKALP / BOOKING WIDGET
+   ============================================ */
+.sankalp-wrap{ display:grid; grid-template-columns:340px 1fr; gap:40px; align-items:start; }
+.sankalp-card{ background:#fff; border-radius:var(--radius-card); padding:36px; box-shadow:var(--shadow-soft); border:1px solid rgba(201,162,75,.25); }
+
+.diya-panel{ background:linear-gradient(160deg,var(--kumkum),var(--kumkum-dark)); border-radius:var(--radius-card); padding:36px 26px; color:#fff; text-align:center; position:sticky; top:110px; overflow:visible; }
+.diya-panel h3{ font-family:var(--font-body); font-weight:600; font-size:.85rem; letter-spacing:.08em; color:var(--turmeric); margin-bottom:20px; text-transform:uppercase; }
+.diya{ position:relative; width:140px; height:120px; margin:0 auto 22px; display:flex; align-items:flex-end; justify-content:center; }
+.diya__base{ width:110px; height:40px; background:linear-gradient(180deg,var(--brass),#8a6a28); border-radius:50% 50% 45% 45%/70% 70% 40% 40%; box-shadow:inset 0 -6px 10px rgba(0,0,0,.25); }
+.diya__flame{
+  position:absolute; bottom:34px; left:50%; width:17px; height:25px;
+  background:radial-gradient(circle at 50% 80%, #fff, var(--turmeric) 45%, var(--marigold) 80%);
+  border-radius:0 50% 50% 50%; transform:translateX(-50%) scale(.2) rotate(-45deg); transform-origin:bottom center;
+  opacity:0; transition:transform .5s ease, opacity .5s ease; filter:drop-shadow(0 0 6px rgba(244,185,62,.8));
+}
+.diya[data-stage="1"] .diya__flame{ opacity:.55; transform:translateX(-50%) scale(.45) rotate(-45deg); }
+.diya[data-stage="2"] .diya__flame{ opacity:.8; transform:translateX(-50%) scale(.7) rotate(-45deg); }
+.diya[data-stage="3"] .diya__flame{ opacity:1; transform:translateX(-50%) scale(.95) rotate(-45deg); animation:flicker 2.4s ease-in-out infinite; }
+.diya[data-stage="3"]{ filter:drop-shadow(0 0 20px rgba(244,185,62,.5)); }
+@keyframes flicker{ 0%,100%{ transform:translateX(-50%) scale(.95) rotate(-45deg); } 50%{ transform:translateX(-50%) scale(1.05) rotate(-42deg); } }
+.diya-panel.is-complete .diya{ animation:diyaBurst .6s ease; }
+@keyframes diyaBurst{ 0%{ transform:scale(1); } 40%{ transform:scale(1.15); } 100%{ transform:scale(1); } }
+.spark{ position:absolute; width:9px; height:7px; background:var(--turmeric); border-radius:0 50% 50% 50%; pointer-events:none; animation:sparkFly .9s ease-out forwards; top:50%; left:50%; }
+@keyframes sparkFly{ to{ transform:translate(var(--tx),var(--ty)) rotate(180deg); opacity:0; } }
+
+.summary-list{ text-align:left; font-size:.9rem; }
+.summary-list li{ display:flex; justify-content:space-between; gap:10px; padding:10px 0; border-bottom:1px dashed rgba(201,162,75,.3); color:rgba(253,240,225,.9); }
+.summary-list li span:first-child{ color:rgba(253,240,225,.6); flex-shrink:0; }
+.summary-list li b{ text-align:right; color:#fff; font-weight:600; }
+
+.sankalp-step{ margin-bottom:34px; }
+.sankalp-step:last-child{ margin-bottom:0; }
+.step-label{ display:flex; align-items:center; gap:12px; font-family:var(--font-display); font-size:1.12rem; color:var(--kumkum); margin-bottom:16px; }
+.step-label .num{ width:29px; height:29px; border-radius:50%; background:var(--kumkum); color:#fff; font-family:var(--font-body); font-weight:700; font-size:.88rem; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+
+.chip-row{ display:flex; flex-wrap:wrap; gap:11px; }
+.chip{ padding:10px 19px; border-radius:var(--radius-chip); border:1.5px solid rgba(201,162,75,.4); font-size:.9rem; font-weight:500; color:var(--dusk); background:var(--ivory-soft); transition:all .18s ease; }
+.chip:hover{ border-color:var(--marigold); }
+.chip.selected{ background:var(--marigold); border-color:var(--marigold); color:var(--dusk); font-weight:600; box-shadow:var(--shadow-soft); }
+
+.slot-group{ margin-bottom:16px; }
+.slot-group:last-child{ margin-bottom:0; }
+.slot-group__label{ font-size:.8rem; text-transform:uppercase; letter-spacing:.06em; color:var(--dusk-soft); margin-bottom:10px; display:block; }
+
+.calendar{ background:var(--ivory-soft); border-radius:16px; padding:20px; max-width:380px; }
+.calendar-header{ display:flex; align-items:center; justify-content:space-between; margin-bottom:14px; }
+.calendar-header button{ width:32px; height:32px; border-radius:50%; background:#fff; border:1px solid rgba(201,162,75,.4); font-size:1.05rem; color:var(--kumkum); }
+.calendar-header button:disabled{ opacity:.3; cursor:not-allowed; }
+.calendar-header span{ font-weight:600; color:var(--kumkum); font-size:.95rem; }
+.calendar-weekdays,.calendar-grid{ display:grid; grid-template-columns:repeat(7,1fr); gap:5px; text-align:center; }
+.calendar-weekdays span{ font-size:.7rem; color:var(--dusk-soft); padding-bottom:6px; }
+.calendar-grid button{ aspect-ratio:1; border-radius:9px; font-size:.85rem; color:var(--dusk); background:#fff; transition:all .15s ease; }
+.calendar-grid button:not(:disabled):hover{ background:var(--turmeric); }
+.calendar-grid button.is-today{ border:1.5px solid var(--marigold); font-weight:700; }
+.calendar-grid button.is-selected{ background:var(--kumkum); color:#fff; font-weight:700; }
+.calendar-grid button:disabled{ opacity:.28; cursor:not-allowed; background:transparent; }
+.calendar-grid .empty{ visibility:hidden; }
+
+.form-grid{ display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+.form-field{ display:flex; flex-direction:column; gap:7px; }
+.form-field.full{ grid-column:1/-1; }
+.form-field label{ font-size:.85rem; font-weight:600; color:var(--dusk); }
+.form-field input,.form-field textarea{ padding:13px 16px; border-radius:12px; border:1.5px solid rgba(201,162,75,.4); font-size:.95rem; background:#fff; color:var(--dusk); }
+.form-field input:focus,.form-field textarea:focus{ border-color:var(--marigold); }
+.form-field.error input,.form-field.error textarea{ border-color:var(--error); }
+.field-error-msg{ font-size:.8rem; color:var(--error); display:none; }
+.form-field.error .field-error-msg{ display:block; }
+.toggle-row{ display:flex; gap:10px; }
+.toggle-row button{ flex:1; padding:11px; border-radius:10px; border:1.5px solid rgba(201,162,75,.4); font-weight:600; font-size:.88rem; color:var(--dusk-soft); }
+.toggle-row button.selected{ background:var(--kumkum); color:#fff; border-color:var(--kumkum); }
+
+.sankalp-actions{ margin-top:26px; display:flex; gap:14px; flex-wrap:wrap; }
+.success-box{ display:none; margin-top:22px; background:rgba(240,134,42,.1); border:1.5px dashed var(--marigold); border-radius:16px; padding:22px; }
+.success-box.show{ display:block; }
+.success-box h4{ color:var(--kumkum); margin-bottom:8px; font-family:var(--font-display); font-size:1.15rem; }
+.success-box p{ color:var(--dusk-soft); font-size:.9rem; }
+
+@media (max-width:980px){
+  .sankalp-wrap{ grid-template-columns:1fr; }
+  .diya-panel{ position:static; }
+  .form-grid{ grid-template-columns:1fr; }
+  .sankalp-card{ padding:26px; }
+}
+
+/* ============================================
+   VISHWAS / TESTIMONIALS
+   ============================================ */
+.testimonial-wrap{ position:relative; max-width:760px; margin:0 auto; }
+.testimonial-track{ overflow:hidden; }
+.testimonial-slides{ display:flex; transition:transform .5s ease; }
+.testimonial-card{ flex:0 0 100%; padding:6px; }
+.testimonial-inner{ background:#fff; border-radius:20px; padding:40px; text-align:center; border:1px solid rgba(201,162,75,.25); box-shadow:var(--shadow-soft); position:relative; }
+.testimonial-inner::before{ content:'\201C'; font-family:var(--font-display); font-size:4rem; color:rgba(240,134,42,.22); position:absolute; top:6px; left:24px; }
+.testimonial-stars{ color:var(--marigold); margin-bottom:14px; font-size:1.05rem; letter-spacing:2px; }
+.testimonial-inner p.quote{ font-size:1.08rem; color:var(--dusk); margin-bottom:20px; }
+.testimonial-meta b{ color:var(--kumkum); display:block; }
+.testimonial-meta span{ color:var(--dusk-soft); font-size:.85rem; }
+.carousel-nav{ display:flex; justify-content:center; gap:20px; align-items:center; margin-top:26px; }
+.carousel-nav button{ width:38px; height:38px; border-radius:50%; background:#fff; border:1.5px solid var(--brass); color:var(--kumkum); display:flex; align-items:center; justify-content:center; }
+.carousel-nav button svg{ width:18px; height:18px; }
+.carousel-dots{ display:flex; gap:8px; }
+.carousel-dots .dot{ width:9px; height:9px; border-radius:50%; background:rgba(122,20,40,.2); transition:all .25s ease; }
+.carousel-dots .dot.active{ background:var(--kumkum); width:22px; border-radius:5px; }
+
+/* ============================================
+   FAQ
+   ============================================ */
+.faq-list{ max-width:760px; margin:0 auto; }
+.faq-item{ border-bottom:1px solid rgba(201,162,75,.3); }
+.faq-question{ width:100%; display:flex; justify-content:space-between; align-items:center; gap:16px; padding:22px 4px; text-align:left; font-size:1.03rem; font-weight:600; color:var(--kumkum); }
+.faq-question .icon{ flex-shrink:0; width:20px; height:20px; position:relative; }
+.faq-question .icon::before,.faq-question .icon::after{ content:''; position:absolute; background:var(--marigold); transition:transform .25s ease; }
+.faq-question .icon::before{ width:100%; height:2px; top:50%; left:0; transform:translateY(-50%); }
+.faq-question .icon::after{ width:2px; height:100%; left:50%; top:0; transform:translateX(-50%); }
+.faq-item.open .faq-question .icon::after{ transform:translateX(-50%) scaleY(0); }
+.faq-answer{ max-height:0; overflow:hidden; transition:max-height .3s ease; }
+.faq-answer p{ padding:0 4px 22px; color:var(--dusk-soft); font-size:.94rem; }
+
+/* ============================================
+   FOOTER / ASHIRWAD
+   ============================================ */
+.ashirwad{ background:var(--dusk); color:rgba(253,240,225,.75); padding-top:76px; }
+.ashirwad .blessing{ text-align:center; font-family:var(--font-display); font-size:1.35rem; color:var(--turmeric); max-width:640px; margin:0 auto 52px; line-height:1.5; padding:0 24px; }
+.footer-grid{ display:grid; grid-template-columns:1.4fr 1fr 1fr; gap:40px; padding-bottom:44px; border-bottom:1px solid rgba(201,162,75,.2); }
+.footer-grid h4{ color:#fff; font-family:var(--font-body); font-size:.9rem; letter-spacing:.04em; text-transform:uppercase; margin-bottom:16px; }
+.footer-grid ul{ display:flex; flex-direction:column; gap:10px; font-size:.92rem; }
+.footer-grid a:hover{ color:var(--turmeric); }
+.footer-brand .logo{ color:#fff; margin-bottom:14px; }
+.footer-brand p{ font-size:.92rem; max-width:280px; }
+.footer-social{ display:flex; gap:12px; margin-top:18px; }
+.footer-social a{ width:36px; height:36px; border-radius:50%; border:1px solid rgba(201,162,75,.35); display:flex; align-items:center; justify-content:center; }
+.footer-social svg{ width:16px; height:16px; }
+.footer-bottom{ padding:22px 0; text-align:center; font-size:.85rem; color:rgba(253,240,225,.5); }
+@media (max-width:800px){ .footer-grid{ grid-template-columns:1fr; gap:30px; } }
+
+/* ============================================
+   FLOATING ELEMENTS
+   ============================================ */
+.whatsapp-float{ position:fixed; bottom:26px; right:26px; width:58px; height:58px; border-radius:50%; background:var(--whatsapp); display:flex; align-items:center; justify-content:center; box-shadow:0 10px 24px rgba(0,0,0,.25); z-index:400; animation:floatPulse 2.6s ease-in-out infinite; }
+.whatsapp-float svg{ width:28px; height:28px; fill:#fff; }
+@keyframes floatPulse{ 0%,100%{ box-shadow:0 10px 24px rgba(0,0,0,.25),0 0 0 0 rgba(37,211,102,.5); } 50%{ box-shadow:0 10px 24px rgba(0,0,0,.25),0 0 0 10px rgba(37,211,102,0); } }
+.back-to-top{ position:fixed; bottom:26px; right:96px; width:42px; height:42px; border-radius:50%; background:var(--kumkum); color:#fff; display:flex; align-items:center; justify-content:center; opacity:0; pointer-events:none; transition:opacity .25s ease, transform .25s ease; transform:translateY(10px); z-index:400; }
+.back-to-top.show{ opacity:1; pointer-events:auto; transform:translateY(0); }
+.back-to-top svg{ width:18px; height:18px; }
+@media (max-width:600px){
+  .whatsapp-float{ width:50px; height:50px; bottom:18px; right:18px; }
+  .back-to-top{ width:38px; height:38px; right:78px; bottom:22px; }
+}
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header" id="siteHeader">
+  <div class="container">
+    <a href="#home" class="logo"><span class="mark">&#2358;&#2369;&#2349;</span>&nbsp;Shubh Sankalp</a>
+    <nav class="nav-links" id="navLinks">
+      <a href="#seva">Seva</a>
+      <a href="#sankalp">Sankalp</a>
+      <a href="#vishwas">Reviews</a>
+      <a href="#faq">FAQ</a>
+      <a href="#sankalp" class="btn btn--primary">Book Now</a>
+    </nav>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ============ HERO / AAVAHAN ============ -->
+  <section class="hero" id="home">
+    <div class="hero__rings" aria-hidden="true"></div>
+    <div aria-hidden="true">
+      <span class="petal"></span><span class="petal"></span><span class="petal"></span><span class="petal"></span><span class="petal"></span>
+      <span class="petal"></span><span class="petal"></span><span class="petal"></span><span class="petal"></span><span class="petal"></span>
+    </div>
+    <div class="container">
+      <div class="hero__inner">
+        <p class="eyebrow">&#2310;&#2357;&#2366;&#2361;&#2344; &middot; A WARM WELCOME</p>
+        <h1>Book Your Pandit. <em>Set Your Sankalp.</em></h1>
+        <p class="lede">Choose your seva, pick an auspicious slot, and confirm on WhatsApp — no online payment, no waiting on hold. You pay your Purohit directly, in person, after the ritual is complete.</p>
+        <div class="hero__actions">
+          <a href="#sankalp" class="btn btn--primary">Book Your Slot</a>
+          <a href="tel:+918487846352" class="btn btn--outline">Call Purohit Ji</a>
+        </div>
+        <div class="hero__muhurat"><span class="dot"></span> Fresh morning &amp; evening slots open through the week</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ STATS ============ -->
+  <section class="stats">
+    <div class="container">
+      <div class="stat"><b>1,200+</b><span>Poojas Completed</span></div>
+      <div class="stat"><b>45+</b><span>Experienced Purohits</span></div>
+      <div class="stat"><b>12</b><span>Cities Served</span></div>
+      <div class="stat"><b>4.9&#9733;</b><span>Average Rating</span></div>
+    </div>
+  </section>
+
+  <!-- ============ SEVA / SERVICES ============ -->
+  <section class="section section--ivory" id="seva">
+    <div class="container">
+      <div class="section-head reveal">
+        <p class="eyebrow">&#2360;&#2375;&#2357;&#2366; &middot; OUR SEVAS</p>
+        <h2>Every Ritual, Handled With Care</h2>
+        <p>From a quiet Ganesh Pooja before a big decision to a full day of wedding rites — pick a seva below, or tell us what you need in the notes and we'll match the right Purohit.</p>
+      </div>
+      <div class="seva-grid" id="sevaGrid">
+
+        <div class="service-card service-card--featured reveal" data-service="Griha Pravesh Pooja">
+          <div class="service-card__icon" style="background:linear-gradient(135deg, var(--turmeric), var(--brass));">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7"/><path d="M5 10v9a1 1 0 001 1h4v-6h4v6h4a1 1 0 001-1v-9"/></svg>
+          </div>
+          <h3>Griha Pravesh Pooja</h3>
+          <p>Bless your new home before you move a single box in. Vedic rites to welcome prosperity and peace into every room.</p>
+          <div class="service-card__meta"><span>Duration: ~2 hrs</span><b>Starts at &#8377;2,100</b></div>
+          <button class="btn btn--primary service-card__book" data-service="Griha Pravesh Pooja">Book This</button>
+        </div>
+
+        <div class="service-card reveal" data-service="Satyanarayan Katha">
+          <div class="service-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6c-2-1.5-5-2-8-1v13c3-1 6-.5 8 1 2-1.5 5-2 8-1V5c-3-1-6-.5-8 1z"/><path d="M12 6v14"/></svg></div>
+          <h3>Satyanarayan Katha</h3>
+          <p>A gentle evening of katha and prasad — for gratitude, new beginnings, or simply because it's time.</p>
+          <div class="service-card__meta"><span>~2.5 hrs</span><b>&#8377;1,800</b></div>
+          <button class="btn btn--dark-outline service-card__book" data-service="Satyanarayan Katha">Book This</button>
+        </div>
+
+        <div class="service-card reveal" data-service="Ganesh Pooja">
+          <div class="service-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 18a7 7 0 0114 0"/><line x1="2" y1="18" x2="22" y2="18"/><line x1="12" y1="7" x2="12" y2="3"/><line x1="6" y1="9" x2="4" y2="7"/><line x1="18" y1="9" x2="20" y2="7"/></svg></div>
+          <h3>Ganesh Pooja</h3>
+          <p>Clear the path before you start anything that matters — a business, a journey, a big decision.</p>
+          <div class="service-card__meta"><span>~1 hr</span><b>&#8377;1,100</b></div>
+          <button class="btn btn--dark-outline service-card__book" data-service="Ganesh Pooja">Book This</button>
+        </div>
+
+        <div class="service-card reveal" data-service="Rudra Abhishek">
+          <div class="service-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c4 5 6.5 8.2 6.5 11.2A6.5 6.5 0 015.5 14.2C5.5 11.2 8 8 12 3z"/></svg></div>
+          <h3>Rudra Abhishek</h3>
+          <p>A powerful Shiv ritual of milk, water, and mantra — offered for strength through a hard season.</p>
+          <div class="service-card__meta"><span>~1.5 hrs</span><b>&#8377;2,500</b></div>
+          <button class="btn btn--dark-outline service-card__book" data-service="Rudra Abhishek">Book This</button>
+        </div>
+
+        <div class="service-card reveal" data-service="Navratri / Durga Pooja">
+          <div class="service-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.2 3.6L17 8l-3.8 1.4L12 13l-1.2-3.6L7 8l3.8-1.4z"/><circle cx="18" cy="16" r="1.6"/><circle cx="6" cy="17" r="1.4"/></svg></div>
+          <h3>Navratri / Durga Pooja</h3>
+          <p>Nine nights, one devotion. We help you host the full vidhi or a single evening's aarti.</p>
+          <div class="service-card__meta"><span>Custom</span><b>from &#8377;1,500/day</b></div>
+          <button class="btn btn--dark-outline service-card__book" data-service="Navratri / Durga Pooja">Book This</button>
+        </div>
+
+        <div class="service-card reveal" data-service="Namkaran Sanskar">
+          <div class="service-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21V10"/><path d="M12 10c0-3.5-2.5-6-6-6 0 3.5 2.5 6 6 6z"/><path d="M12 13c0-3.5 2.5-6 6-6 0 3.5-2.5 6-6 6z"/></svg></div>
+          <h3>Namkaran Sanskar</h3>
+          <p>The ceremony where your child receives their name — small, personal, and unforgettable.</p>
+          <div class="service-card__meta"><span>~1 hr</span><b>&#8377;1,600</b></div>
+          <button class="btn btn--dark-outline service-card__book" data-service="Namkaran Sanskar">Book This</button>
+        </div>
+
+        <div class="service-card reveal" data-service="Graha Shanti">
+          <div class="service-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8 8 0 119.5 4a6.5 6.5 0 1010.5 10.5z"/><path d="M18 3l.6 1.6L20 5l-1.4.6L18 7l-.6-1.4L16 5l1.4-.4z"/></svg></div>
+          <h3>Graha Shanti</h3>
+          <p>For the phases astrology warns about — a calm, structured ritual to steady what feels shaky.</p>
+          <div class="service-card__meta"><span>~2 hrs</span><b>&#8377;2,800</b></div>
+          <button class="btn btn--dark-outline service-card__book" data-service="Graha Shanti">Book This</button>
+        </div>
+
+        <div class="service-card reveal" data-service="Office / Shop Opening Pooja">
+          <div class="service-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="12" r="3.2"/><path d="M10 12h11M17 12v3M20 12v3"/></svg></div>
+          <h3>Office / Shop Opening</h3>
+          <p>Open your doors the right way — a short, focused pooja before the first customer walks in.</p>
+          <div class="service-card__meta"><span>~45 min</span><b>&#8377;1,200</b></div>
+          <button class="btn btn--dark-outline service-card__book" data-service="Office / Shop Opening Pooja">Book This</button>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ HOW IT WORKS / VIDHI ============ -->
+  <section class="section section--soft" id="how">
+    <div class="container">
+      <div class="section-head center reveal">
+        <p class="eyebrow" style="justify-content:center;">&#2357;&#2367;&#2343;&#2367; &middot; HOW BOOKING WORKS</p>
+        <h2>Four Steps. No App to Download.</h2>
+      </div>
+      <div class="how-steps">
+        <div class="how-step reveal">
+          <h3>Choose Your Seva</h3>
+          <p>Pick the pooja you need from our list, or describe it in the notes if it's something specific.</p>
+        </div>
+        <div class="how-step reveal">
+          <h3>Pick a Tithi &amp; Muhurat</h3>
+          <p>Choose a date and time slot that works for your family — morning, afternoon, or evening.</p>
+        </div>
+        <div class="how-step reveal">
+          <h3>Send Your Sankalp</h3>
+          <p>Confirm your details and send them straight to us on WhatsApp — takes about thirty seconds.</p>
+        </div>
+        <div class="how-step reveal">
+          <h3>We Confirm &amp; Arrive</h3>
+          <p>We call to confirm your Purohit and any samagri, then arrive on time. Pay only after the seva.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SANKALP / BOOKING ============ -->
+  <section class="section section--ivory" id="sankalp">
+    <div class="container">
+      <div class="section-head reveal">
+        <p class="eyebrow">&#2360;&#2306;&#2325;&#2354;&#2381;&#2346; &middot; TAKE YOUR SANKALP</p>
+        <h2>Set Your Intention. We'll Handle the Rest.</h2>
+        <p>A Sankalp is the quiet moment before a ritual where you state what it's for. Do the same here — a few taps, and we'll take it from there.</p>
+      </div>
+
+      <div class="sankalp-wrap reveal">
+        <!-- Diya progress signature -->
+        <div class="diya-panel" id="diyaPanel">
+          <h3>Your Sankalp</h3>
+          <div class="diya" id="diya" data-stage="0">
+            <div class="diya__flame"></div>
+            <div class="diya__base"></div>
+          </div>
+          <ul class="summary-list">
+            <li><span>Seva</span><b id="sumService">Not chosen yet</b></li>
+            <li><span>Tithi</span><b id="sumDate">Not chosen yet</b></li>
+            <li><span>Muhurat</span><b id="sumTime">Not chosen yet</b></li>
+          </ul>
+        </div>
+
+        <!-- Booking steps -->
+        <div class="sankalp-card">
+
+          <div class="sankalp-step">
+            <p class="step-label"><span class="num">1</span> Choose Your Seva</p>
+            <div class="chip-row" id="serviceChips">
+              <button class="chip" data-service="Griha Pravesh Pooja">Griha Pravesh</button>
+              <button class="chip" data-service="Satyanarayan Katha">Satyanarayan Katha</button>
+              <button class="chip" data-service="Ganesh Pooja">Ganesh Pooja</button>
+              <button class="chip" data-service="Rudra Abhishek">Rudra Abhishek</button>
+              <button class="chip" data-service="Navratri / Durga Pooja">Navratri / Durga</button>
+              <button class="chip" data-service="Namkaran Sanskar">Namkaran</button>
+              <button class="chip" data-service="Graha Shanti">Graha Shanti</button>
+              <button class="chip" data-service="Office / Shop Opening Pooja">Office Opening</button>
+              <button class="chip" data-service="Other — see notes">Something Else</button>
+            </div>
+          </div>
+
+          <div class="sankalp-step">
+            <p class="step-label"><span class="num">2</span> Choose Your Tithi</p>
+            <div class="calendar" id="calendar">
+              <div class="calendar-header">
+                <button id="prevMonth" aria-label="Previous month" type="button">&#8249;</button>
+                <span id="calendarLabel">Month Year</span>
+                <button id="nextMonth" aria-label="Next month" type="button">&#8250;</button>
+              </div>
+              <div class="calendar-weekdays">
+                <span>Su</span><span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span>
+              </div>
+              <div class="calendar-grid" id="calendarGrid"></div>
+            </div>
+          </div>
+
+          <div class="sankalp-step">
+            <p class="step-label"><span class="num">3</span> Choose Your Muhurat</p>
+            <div class="slot-group">
+              <span class="slot-group__label">Prabhat &middot; Morning</span>
+              <div class="chip-row">
+                <button class="chip" data-time="6:00 AM">6:00 AM</button>
+                <button class="chip" data-time="7:30 AM">7:30 AM</button>
+                <button class="chip" data-time="9:00 AM">9:00 AM</button>
+              </div>
+            </div>
+            <div class="slot-group">
+              <span class="slot-group__label">Madhyahna &middot; Afternoon</span>
+              <div class="chip-row">
+                <button class="chip" data-time="12:00 PM">12:00 PM</button>
+                <button class="chip" data-time="2:00 PM">2:00 PM</button>
+              </div>
+            </div>
+            <div class="slot-group">
+              <span class="slot-group__label">Sandhya &middot; Evening</span>
+              <div class="chip-row">
+                <button class="chip" data-time="5:00 PM">5:00 PM</button>
+                <button class="chip" data-time="6:30 PM">6:30 PM</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="sankalp-step">
+            <p class="step-label"><span class="num">4</span> Your Details</p>
+            <div class="form-grid">
+              <div class="form-field full" id="fieldName">
+                <label for="custName">Your Name</label>
+                <input type="text" id="custName" placeholder="e.g. Radhika Malhotra">
+                <span class="field-error-msg">Please tell us your name.</span>
+              </div>
+              <div class="form-field" id="fieldPhone">
+                <label for="custPhone">Phone / WhatsApp Number</label>
+                <input type="tel" id="custPhone" placeholder="98765 43210">
+                <span class="field-error-msg">Please add a valid phone number.</span>
+              </div>
+              <div class="form-field">
+                <label for="custCity">City / Locality</label>
+                <input type="text" id="custCity" placeholder="e.g. Kothrud, Pune">
+              </div>
+              <div class="form-field">
+                <label for="custGuests">Guests Expected (optional)</label>
+                <input type="text" id="custGuests" placeholder="e.g. 10–15">
+              </div>
+              <div class="form-field">
+                <label>Need Pooja Samagri?</label>
+                <div class="toggle-row" id="samagriToggle">
+                  <button type="button" data-val="yes">Yes, please</button>
+                  <button type="button" data-val="no" class="selected">No, I have it</button>
+                </div>
+              </div>
+              <div class="form-field full">
+                <label for="custNotes">Anything else we should know?</label>
+                <textarea id="custNotes" rows="3" placeholder="Language preference, specific vidhi, gotra details, etc."></textarea>
+              </div>
+            </div>
+
+            <div class="sankalp-actions">
+              <button class="btn btn--whatsapp" id="confirmBtn" type="button">
+                <svg viewBox="0 0 32 32" fill="currentColor"><path d="M16.02 3C9.4 3 4 8.4 4 15.02c0 2.35.68 4.55 1.87 6.4L4.4 27l5.75-1.5a11.9 11.9 0 005.87 1.53h.01c6.62 0 12.02-5.4 12.02-12.02C28.05 8.4 22.65 3 16.02 3zm0 21.6h-.01a9.9 9.9 0 01-5.04-1.38l-.36-.21-3.75.98 1-3.66-.24-.38a9.9 9.9 0 01-1.52-5.33c0-5.48 4.46-9.94 9.93-9.94 2.65 0 5.14 1.04 7.02 2.92a9.86 9.86 0 012.9 7.03c0 5.48-4.46 9.94-9.93 9.94zm5.44-7.44c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.65.07-.3-.15-1.25-.46-2.38-1.47-.88-.78-1.47-1.75-1.64-2.05-.17-.3-.02-.46.13-.61.15-.15.35-.4.52-.6.17-.2.22-.35.35-.58.12-.23.06-.43-.04-.6-.1-.17-.5-1.22-.69-1.67-.18-.44-.37-.38-.5-.38-.13 0-.29-.02-.44-.02-.15 0-.4.06-.6.28-.2.22-.79.77-.79 1.86 0 1.1.8 2.16.91 2.31.11.15 1.5 2.3 3.65 3.13 1.8.7 2.17.56 2.55.53.38-.04 1.23-.5 1.4-.98.18-.48.18-.9.13-.98-.05-.09-.2-.15-.5-.3z"/></svg>
+                Confirm My Sankalp on WhatsApp
+              </button>
+              <a href="tel:+918487846352" class="btn btn--dark-outline">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6.6 10.8a15 15 0 006.6 6.6l2.2-2.2a1.2 1.2 0 011.2-.3 11 11 0 003.4.5 1.2 1.2 0 011.2 1.2V20a1.2 1.2 0 01-1.2 1.2A17.2 17.2 0 013 4.2 1.2 1.2 0 014.2 3h3.4a1.2 1.2 0 011.2 1.2 11 11 0 00.5 3.4 1.2 1.2 0 01-.3 1.2z"/></svg>
+                Or Call Us Directly
+              </a>
+            </div>
+
+            <div class="success-box" id="successBox">
+              <h4>Your Sankalp Is Ready &#128308;</h4>
+              <p>We've opened WhatsApp with your details filled in — just hit send. Our team will confirm your Purohit and Muhurat shortly. Payment is handled directly with your Purohit after the seva — nothing to pay online.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ VISHWAS / TESTIMONIALS ============ -->
+  <section class="section section--soft" id="vishwas">
+    <div class="container">
+      <div class="section-head center reveal">
+        <p class="eyebrow" style="justify-content:center;">&#2357;&#2367;&#2358;&#2381;&#2357;&#2366;&#2360; &middot; FAMILIES WHO TRUSTED US</p>
+        <h2>Their Sankalp, Kept</h2>
+      </div>
+
+      <div class="testimonial-wrap reveal">
+        <div class="testimonial-track">
+          <div class="testimonial-slides" id="testimonialSlides">
+
+            <div class="testimonial-card">
+              <div class="testimonial-inner">
+                <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                <p class="quote">Booked our Griha Pravesh two days before we moved in. The whole thing took five minutes and the Purohit called within the hour to confirm the muhurat.</p>
+                <div class="testimonial-meta"><b>Amit &amp; Sneha R.</b><span>Griha Pravesh &middot; Pune</span></div>
+              </div>
+            </div>
+
+            <div class="testimonial-card">
+              <div class="testimonial-inner">
+                <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                <p class="quote">We needed a Namkaran on short notice for my daughter. They found us a Marathi-speaking Purohit for the same week — everyone was so warm with the baby.</p>
+                <div class="testimonial-meta"><b>Radhika M.</b><span>Namkaran Sanskar &middot; Pune</span></div>
+              </div>
+            </div>
+
+            <div class="testimonial-card">
+              <div class="testimonial-inner">
+                <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                <p class="quote">Honestly booked this half expecting to chase someone for days. Instead I sent one WhatsApp message and got a callback before dinner. Graha Shanti went smoothly.</p>
+                <div class="testimonial-meta"><b>Suresh K.</b><span>Graha Shanti &middot; Nashik</span></div>
+              </div>
+            </div>
+
+            <div class="testimonial-card">
+              <div class="testimonial-inner">
+                <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                <p class="quote">Liked that I only paid after the katha was done — no advance, no app, no card details. Just showed up and did the ritual properly.</p>
+                <div class="testimonial-meta"><b>Meera J.</b><span>Satyanarayan Katha &middot; Mumbai</span></div>
+              </div>
+            </div>
+
+            <div class="testimonial-card">
+              <div class="testimonial-inner">
+                <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                <p class="quote">Booked an Office Pooja for our new shop at 6am on a Tuesday — didn't think anyone would agree, but the slot was right there on the calendar. Easy.</p>
+                <div class="testimonial-meta"><b>Vikas T.</b><span>Office Opening &middot; Nagpur</span></div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <div class="carousel-nav">
+          <button id="prevTestimonial" aria-label="Previous review" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg></button>
+          <div class="carousel-dots" id="carouselDots"></div>
+          <button id="nextTestimonial" aria-label="Next review" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FAQ / JIGYASA ============ -->
+  <section class="section section--ivory" id="faq">
+    <div class="container">
+      <div class="section-head center reveal">
+        <p class="eyebrow" style="justify-content:center;">&#2332;&#2367;&#2333;&#2381;&#2334;&#2366;&#2360;&#2366; &middot; GOOD QUESTIONS</p>
+        <h2>Before You Book</h2>
+      </div>
+
+      <div class="faq-list reveal" id="faqList">
+        <div class="faq-item">
+          <button class="faq-question" type="button" aria-expanded="false">Do I need to pay anything online to book?<span class="icon"></span></button>
+          <div class="faq-answer"><p>No. Booking your slot here is completely free — you only pay the Purohit directly, in person, after the seva is performed.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" type="button" aria-expanded="false">How do you confirm my booking?<span class="icon"></span></button>
+          <div class="faq-answer"><p>Once you send your Sankalp on WhatsApp, our team reaches out within a few hours to confirm the Purohit, muhurat, and any samagri you've asked for.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" type="button" aria-expanded="false">Can I reschedule or cancel?<span class="icon"></span></button>
+          <div class="faq-answer"><p>Yes — message us anytime before the day and we'll help you move to a new date and muhurat, at no charge.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" type="button" aria-expanded="false">Do you provide the pooja samagri?<span class="icon"></span></button>
+          <div class="faq-answer"><p>You can request samagri while booking. We'll include it and share the exact list and cost when we confirm your slot.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" type="button" aria-expanded="false">Which languages do your Purohits perform in?<span class="icon"></span></button>
+          <div class="faq-answer"><p>We have Purohits comfortable in Marathi, Hindi, Gujarati, and Sanskrit-Vedic traditions — just mention your preference in the notes.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" type="button" aria-expanded="false">How far in advance should I book?<span class="icon"></span></button>
+          <div class="faq-answer"><p>At least 2–3 days for regular poojas, and 7+ days during festival season when muhurats fill up quickly.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" type="button" aria-expanded="false">Do you travel outside the city?<span class="icon"></span></button>
+          <div class="faq-answer"><p>Yes, for select nearby cities and destination ceremonies — mention your location and we'll confirm availability.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============ FOOTER / ASHIRWAD ============ -->
+<footer class="ashirwad" id="contact">
+  <div class="container">
+    <p class="blessing">May every Sankalp taken here bring peace to your home and clarity to your path.</p>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="#home" class="logo"><span class="mark">&#2358;&#2369;&#2349;</span>&nbsp;Shubh Sankalp</a>
+        <p>Vedic pooja booking, made simple. Choose your seva, pick a slot, and pay your Purohit directly — no online payment, ever.</p>
+        <div class="footer-social">
+          <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg></a>
+          <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M15 4h-2a4 4 0 00-4 4v3H7v3h2v6h3v-6h2.5l.5-3H12V8a1 1 0 011-1h2z"/></svg></a>
+          <a href="#" aria-label="YouTube"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2.5" y="6" width="19" height="12" rx="4"/><path d="M10.5 9.5l4.5 2.5-4.5 2.5z" fill="currentColor" stroke="none"/></svg></a>
+        </div>
+      </div>
+      <div class="footer-links">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="#seva">Our Sevas</a></li>
+          <li><a href="#sankalp">Book Now</a></li>
+          <li><a href="#vishwas">Reviews</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </div>
+      <div class="footer-contact">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="tel:+918487846352">+91 98765 43210</a></li>
+          <li><a href="https://wa.me/918487846352" target="_blank" rel="noopener">WhatsApp Us</a></li>
+          <li><a href="mailto:hello@shubhsankalp.in">hello@shubhsankalp.in</a></li>
+          <li>Pune, Maharashtra &amp; nearby areas</li>
+          <li>Every day, 6 AM – 9 PM</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">&copy; 2026 Shubh Sankalp. All rights reserved. &middot; Placeholder business — replace details before going live.</div>
+  </div>
+</footer>
+
+<a href="https://wa.me/918487846352?text=Hi%2C%20I%27d%20like%20to%20know%20more%20about%20booking%20a%20pooja." target="_blank" rel="noopener" class="whatsapp-float" aria-label="Chat on WhatsApp">
+  <svg viewBox="0 0 32 32"><path d="M16.02 3C9.4 3 4 8.4 4 15.02c0 2.35.68 4.55 1.87 6.4L4.4 27l5.75-1.5a11.9 11.9 0 005.87 1.53h.01c6.62 0 12.02-5.4 12.02-12.02C28.05 8.4 22.65 3 16.02 3zm0 21.6h-.01a9.9 9.9 0 01-5.04-1.38l-.36-.21-3.75.98 1-3.66-.24-.38a9.9 9.9 0 01-1.52-5.33c0-5.48 4.46-9.94 9.93-9.94 2.65 0 5.14 1.04 7.02 2.92a9.86 9.86 0 012.9 7.03c0 5.48-4.46 9.94-9.93 9.94zm5.44-7.44c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.65.07-.3-.15-1.25-.46-2.38-1.47-.88-.78-1.47-1.75-1.64-2.05-.17-.3-.02-.46.13-.61.15-.15.35-.4.52-.6.17-.2.22-.35.35-.58.12-.23.06-.43-.04-.6-.1-.17-.5-1.22-.69-1.67-.18-.44-.37-.38-.5-.38-.13 0-.29-.02-.44-.02-.15 0-.4.06-.6.28-.2.22-.79.77-.79 1.86 0 1.1.8 2.16.91 2.31.11.15 1.5 2.3 3.65 3.13 1.8.7 2.17.56 2.55.53.38-.04 1.23-.5 1.4-.98.18-.48.18-.9.13-.98-.05-.09-.2-.15-.5-.3z"/></svg>
+</a>
+<button class="back-to-top" id="backToTop" aria-label="Back to top" type="button">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+</button>
+
+<script>
+// ===== State =====
+const state = { service: null, date: null, dateLabel: null, time: null, samagri: 'no' };
+const WHATSAPP_NUMBER = '918487846352'; // TODO: replace with the real WhatsApp number (digits only, country code first)
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+// ===== Mobile nav =====
+const navToggle = document.getElementById('navToggle');
+const navLinks = document.getElementById('navLinks');
+navToggle.addEventListener('click', () => {
+  const isOpen = navLinks.classList.toggle('open');
+  navToggle.classList.toggle('active', isOpen);
+  navToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+});
+navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+  navLinks.classList.remove('open');
+  navToggle.classList.remove('active');
+  navToggle.setAttribute('aria-expanded', 'false');
+}));
+
+// ===== Sticky header =====
+const header = document.getElementById('siteHeader');
+function onScrollHeader(){ header.classList.toggle('scrolled', window.scrollY > 40); }
+window.addEventListener('scroll', onScrollHeader, { passive:true });
+onScrollHeader();
+
+// ===== Back to top =====
+const backToTop = document.getElementById('backToTop');
+function onScrollBackTop(){ backToTop.classList.toggle('show', window.scrollY > 700); }
+window.addEventListener('scroll', onScrollBackTop, { passive:true });
+backToTop.addEventListener('click', () => window.scrollTo({ top:0, behavior: prefersReducedMotion ? 'auto' : 'smooth' }));
+onScrollBackTop();
+
+// ===== Reveal on scroll =====
+const revealEls = document.querySelectorAll('.reveal');
+if ('IntersectionObserver' in window && !prefersReducedMotion) {
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) { entry.target.classList.add('in-view'); io.unobserve(entry.target); }
+    });
+  }, { threshold: 0.12 });
+  revealEls.forEach(el => io.observe(el));
+} else {
+  revealEls.forEach(el => el.classList.add('in-view'));
+}
+
+// ===== Diya progress + summary =====
+const diya = document.getElementById('diya');
+const diyaPanel = document.getElementById('diyaPanel');
+const sumService = document.getElementById('sumService');
+const sumDate = document.getElementById('sumDate');
+const sumTime = document.getElementById('sumTime');
+
+function updateSummary(){
+  sumService.textContent = state.service || 'Not chosen yet';
+  sumDate.textContent = state.dateLabel || 'Not chosen yet';
+  sumTime.textContent = state.time || 'Not chosen yet';
+  let stage = 0;
+  if (state.service) stage = 1;
+  if (state.service && state.date) stage = 2;
+  if (state.service && state.date && state.time) stage = 3;
+  diya.setAttribute('data-stage', String(stage));
+}
+
+// ===== Service selection (widget chips + "Book This" cards) =====
+function selectService(name){
+  state.service = name;
+  document.querySelectorAll('#serviceChips .chip').forEach(chip => chip.classList.toggle('selected', chip.dataset.service === name));
+  updateSummary();
+}
+document.getElementById('serviceChips').addEventListener('click', (e) => {
+  const chip = e.target.closest('.chip');
+  if (chip) selectService(chip.dataset.service);
+});
+document.querySelectorAll('.service-card__book').forEach(btn => {
+  btn.addEventListener('click', () => {
+    selectService(btn.dataset.service);
+    document.getElementById('sankalp').scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth' });
+  });
+});
+
+// ===== Time slot selection =====
+document.querySelectorAll('[data-time]').forEach(chip => {
+  chip.addEventListener('click', () => {
+    state.time = chip.dataset.time;
+    document.querySelectorAll('[data-time]').forEach(c => c.classList.toggle('selected', c === chip));
+    updateSummary();
+  });
+});
+
+// ===== Samagri toggle =====
+const samagriToggle = document.getElementById('samagriToggle');
+samagriToggle.addEventListener('click', (e) => {
+  const btn = e.target.closest('button');
+  if (!btn) return;
+  state.samagri = btn.dataset.val;
+  samagriToggle.querySelectorAll('button').forEach(b => b.classList.toggle('selected', b === btn));
+});
+
+// ===== Calendar =====
+const calendarGrid = document.getElementById('calendarGrid');
+const calendarLabel = document.getElementById('calendarLabel');
+const prevMonthBtn = document.getElementById('prevMonth');
+const nextMonthBtn = document.getElementById('nextMonth');
+const today = new Date(); today.setHours(0,0,0,0);
+let viewYear = today.getFullYear();
+let viewMonth = today.getMonth();
+const MAX_MONTHS_AHEAD = 6;
+const MONTH_NAMES = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+function pad(n){ return String(n).padStart(2,'0'); }
+
+function renderCalendar(){
+  calendarGrid.innerHTML = '';
+  calendarLabel.textContent = MONTH_NAMES[viewMonth] + ' ' + viewYear;
+  const firstDay = new Date(viewYear, viewMonth, 1).getDay();
+  const daysInMonth = new Date(viewYear, viewMonth + 1, 0).getDate();
+
+  for (let i = 0; i < firstDay; i++) {
+    const span = document.createElement('span');
+    span.className = 'empty';
+    calendarGrid.appendChild(span);
+  }
+  for (let d = 1; d <= daysInMonth; d++) {
+    const cellDate = new Date(viewYear, viewMonth, d); cellDate.setHours(0,0,0,0);
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.textContent = String(d);
+    const iso = viewYear + '-' + pad(viewMonth+1) + '-' + pad(d);
+    btn.dataset.date = iso;
+    if (cellDate < today) { btn.disabled = true; btn.classList.add('is-past'); }
+    if (cellDate.getTime() === today.getTime()) btn.classList.add('is-today');
+    if (state.date === iso) btn.classList.add('is-selected');
+    calendarGrid.appendChild(btn);
+  }
+  prevMonthBtn.disabled = (viewYear === today.getFullYear() && viewMonth === today.getMonth());
+  const monthsAhead = (viewYear - today.getFullYear()) * 12 + (viewMonth - today.getMonth());
+  nextMonthBtn.disabled = monthsAhead >= MAX_MONTHS_AHEAD;
+}
+calendarGrid.addEventListener('click', (e) => {
+  const btn = e.target.closest('button[data-date]');
+  if (!btn || btn.disabled) return;
+  state.date = btn.dataset.date;
+  const [y,m,d] = btn.dataset.date.split('-').map(Number);
+  state.dateLabel = new Date(y, m-1, d).toLocaleDateString('en-IN', { weekday:'short', day:'numeric', month:'short' });
+  renderCalendar();
+  updateSummary();
+});
+prevMonthBtn.addEventListener('click', () => { viewMonth--; if (viewMonth < 0){ viewMonth = 11; viewYear--; } renderCalendar(); });
+nextMonthBtn.addEventListener('click', () => { viewMonth++; if (viewMonth > 11){ viewMonth = 0; viewYear++; } renderCalendar(); });
+renderCalendar();
+
+// ===== Form validation + WhatsApp submit =====
+const confirmBtn = document.getElementById('confirmBtn');
+const successBox = document.getElementById('successBox');
+const custName = document.getElementById('custName');
+const custPhone = document.getElementById('custPhone');
+const custCity = document.getElementById('custCity');
+const custGuests = document.getElementById('custGuests');
+const custNotes = document.getElementById('custNotes');
+const fieldName = document.getElementById('fieldName');
+const fieldPhone = document.getElementById('fieldPhone');
+
+function isValidPhone(v){ const digits = v.replace(/[\s\-()+]/g, ''); return /^\d{10,13}$/.test(digits); }
+
+function spawnSparks(container){
+  if (prefersReducedMotion) return;
+  for (let i = 0; i < 10; i++) {
+    const s = document.createElement('span');
+    s.className = 'spark';
+    const angle = (Math.PI * 2 * i) / 10 + Math.random() * 0.3;
+    const dist = 60 + Math.random() * 40;
+    s.style.setProperty('--tx', Math.cos(angle) * dist + 'px');
+    s.style.setProperty('--ty', Math.sin(angle) * dist + 'px');
+    container.appendChild(s);
+    s.addEventListener('animationend', () => s.remove());
+  }
+}
+
+confirmBtn.addEventListener('click', () => {
+  fieldName.classList.remove('error');
+  fieldPhone.classList.remove('error');
+
+  if (!state.service) { document.getElementById('serviceChips').scrollIntoView({ behavior:'smooth', block:'center' }); return; }
+  if (!state.date) { document.getElementById('calendar').scrollIntoView({ behavior:'smooth', block:'center' }); return; }
+  if (!state.time) { document.querySelector('[data-time]').closest('.sankalp-step').scrollIntoView({ behavior:'smooth', block:'center' }); return; }
+
+  let firstInvalid = null;
+  if (!custName.value.trim()) { fieldName.classList.add('error'); firstInvalid = fieldName; }
+  if (!custPhone.value.trim() || !isValidPhone(custPhone.value)) { fieldPhone.classList.add('error'); if (!firstInvalid) firstInvalid = fieldPhone; }
+  if (firstInvalid) { firstInvalid.scrollIntoView({ behavior:'smooth', block:'center' }); return; }
+
+  const lines = [
+    'Namaste! I would like to book a Sankalp:',
+    'Seva: ' + state.service,
+    'Tithi: ' + state.dateLabel,
+    'Muhurat: ' + state.time,
+    'Name: ' + custName.value.trim(),
+    'Phone: ' + custPhone.value.trim(),
+  ];
+  if (custCity.value.trim()) lines.push('City: ' + custCity.value.trim());
+  if (custGuests.value.trim()) lines.push('Guests: ' + custGuests.value.trim());
+  lines.push('Samagri needed: ' + (state.samagri === 'yes' ? 'Yes' : 'No'));
+  if (custNotes.value.trim()) lines.push('Notes: ' + custNotes.value.trim());
+
+  const waUrl = 'https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(lines.join('\n'));
+  window.open(waUrl, '_blank', 'noopener');
+
+  diya.setAttribute('data-stage', '3');
+  diyaPanel.classList.add('is-complete');
+  spawnSparks(diyaPanel);
+  successBox.classList.add('show');
+  successBox.scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth', block:'center' });
+});
+
+// ===== Testimonial carousel =====
+const slidesWrap = document.getElementById('testimonialSlides');
+const slides = slidesWrap.children;
+const dotsWrap = document.getElementById('carouselDots');
+let currentSlide = 0;
+let carouselTimer = null;
+for (let i = 0; i < slides.length; i++) {
+  const dot = document.createElement('button');
+  dot.type = 'button';
+  dot.className = 'dot' + (i === 0 ? ' active' : '');
+  dot.setAttribute('aria-label', 'Go to review ' + (i+1));
+  dot.addEventListener('click', () => { goToSlide(i); restartCarousel(); });
+  dotsWrap.appendChild(dot);
+}
+function goToSlide(i){
+  currentSlide = (i + slides.length) % slides.length;
+  slidesWrap.style.transform = 'translateX(-' + (currentSlide * 100) + '%)';
+  dotsWrap.querySelectorAll('.dot').forEach((d, idx) => d.classList.toggle('active', idx === currentSlide));
+}
+document.getElementById('prevTestimonial').addEventListener('click', () => { goToSlide(currentSlide - 1); restartCarousel(); });
+document.getElementById('nextTestimonial').addEventListener('click', () => { goToSlide(currentSlide + 1); restartCarousel(); });
+function startCarousel(){ if (!prefersReducedMotion) carouselTimer = setInterval(() => goToSlide(currentSlide + 1), 5500); }
+function restartCarousel(){ clearInterval(carouselTimer); startCarousel(); }
+const testimonialWrap = document.querySelector('.testimonial-wrap');
+testimonialWrap.addEventListener('mouseenter', () => clearInterval(carouselTimer));
+testimonialWrap.addEventListener('mouseleave', startCarousel);
+startCarousel();
+
+// ===== FAQ accordion =====
+document.querySelectorAll('.faq-item').forEach(item => {
+  const question = item.querySelector('.faq-question');
+  const answer = item.querySelector('.faq-answer');
+  question.addEventListener('click', () => {
+    const isOpen = item.classList.contains('open');
+    item.classList.toggle('open', !isOpen);
+    answer.style.maxHeight = isOpen ? '0px' : answer.scrollHeight + 'px';
+    question.setAttribute('aria-expanded', isOpen ? 'false' : 'true');
+  });
+});
+window.addEventListener('resize', () => {
+  document.querySelectorAll('.faq-item.open .faq-answer').forEach(answer => { answer.style.maxHeight = answer.scrollHeight + 'px'; });
+});
+
+updateSummary();
+</script>
+</body>
+</html>
